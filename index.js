@@ -269,6 +269,10 @@ function run_xhr(options) {
     request.log.debug('Request done', {'id':xhr.id})
 
     xhr.body = xhr.responseText
+    if(!xhr.statusCode) {
+      // ie9
+      xhr.statusCode = xhr.status
+    }
     if(options.json) {
       try        { xhr.body = JSON.parse(xhr.responseText) }
       catch (er) { return options.callback(er, xhr)        }
